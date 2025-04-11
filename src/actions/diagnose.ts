@@ -46,7 +46,8 @@ export class GeminiAI extends Action {
         Existing medical conditions: ${existing_conditions.length ? existing_conditions.join(", ") : "none"}.
 
         Based on this, provide:
-        - A short response in less than 50 words
+        - A short response in less than 50 words, medical advice, and a diagnosis if possible.
+        - Possible dieseases one is sufuering from
         - Food or natural remedies if any
         - Steps to follow at home
         - Indicate if the user should **visit a clinic** — but only if symptoms are severe, persistent, or potentially serious.
@@ -54,6 +55,7 @@ export class GeminiAI extends Action {
         Format the response as JSON like this:
         {
           "shortAnswer": "...",
+          "Possible diseases": ["..."],
           "steps": ["..."],
           "foodRemedies": ["..."],
           "visitClinic": true or false
@@ -67,7 +69,22 @@ export class GeminiAI extends Action {
         contents: enhancedPrompt,
       });
 
-      response.content = geminiResponse.text;
+      let rawContent = geminiResponse.text;
+
+      // Remove ```json and ``` if present
+      rawContent = rawContent.replace(/```json|```/g, '').trim();
+
+      let parsedContent;
+      try {
+        parsedContent = JSON.parse(rawContent);
+      } catch (parseError) {
+        console.error("Failed to parse Gemini response:", parseError);
+        response.statusCode = 500;
+        response.error = "Failed to parse AI response as JSON.";
+        return response;
+      }
+
+      response.content = parsedContent;
       return response;
 
     } catch (error) {
