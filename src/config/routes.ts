@@ -17,7 +17,8 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
       ],
       post: [
         { path: "/register", action: "registerUser" },
-        { path: "/login", action: "login" }
+        { path: "/login", action: "login" },
+        { path: "/diagnose", action: "geminiAI" }
       ]
     };
   },
