@@ -19,7 +19,7 @@ export class RegisterUser extends Action {
     };
   }
 
-  async run(data) {
+  async run({ connection, params }) {
     const {
       name,
       email,
@@ -28,33 +28,46 @@ export class RegisterUser extends Action {
       gender,
       allergies = [],
       existing_conditions = []
-    } = data.params;
+    } = params;
 
-    const existing = await userModel.findOne({ email });
-    if (existing) {
-      throw new Error('User already exists with this email');
+    try {
+      const existing = await userModel.findOne({ email });
+      if (existing) {
+        connection.rawConnection.responseHttpCode = 409;
+        return {
+          success: false,
+          error: 'A user already exists with this email.'
+        };
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const user = new userModel({
+        name,
+        email,
+        password: hashedPassword,
+        age,
+        gender,
+        allergies,
+        existing_conditions
+      });
+
+      await user.save();
+
+      connection.rawConnection.responseHttpCode = 201;
+      return {
+        success: true,
+        message: 'User registered successfully',
+        userId: user._id
+      };
+    } catch (error) {
+      const isValidationError = error.name === 'ValidationError';
+      connection.rawConnection.responseHttpCode = isValidationError ? 400 : 500;
+
+      return {
+        success: false,
+        error: isValidationError ? error.message : 'Registration failed. Please try again.'
+      };
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = new userModel({
-      name,
-      email,
-      password: hashedPassword,
-      age,
-      gender,
-      allergies,
-      existing_conditions
-    });
-
-    await user.save();
-
-    data.response.message = 'User registered successfully';
-
-    data.response = {
-      success: true,
-      message: 'User registered successfully',
-      userId: user._id
-    };
   }
 }

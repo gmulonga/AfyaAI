@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import userModel from '../models/userModel';
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
 const JWT_EXPIRES_IN = '1d';
 
 export class Login extends Action {
@@ -17,7 +17,7 @@ export class Login extends Action {
     };
   }
 
-  async run({ params, response }) {
+  async run({connection, params }) {
     const { email, password } = params;
 
     const user = await userModel.findOne({ email });
@@ -27,6 +27,7 @@ export class Login extends Action {
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
+      connection.rawConnection.responseHttpCode = 401;
       throw new Error('Invalid email or password');
     }
 
@@ -40,7 +41,14 @@ export class Login extends Action {
       expiresIn: JWT_EXPIRES_IN,
     });
 
-    response.message = 'Login successful';
-    response.token = token;
+    return {
+      message: 'Login successful',
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    };
   }
 }
