@@ -54,7 +54,7 @@ export const DEFAULT = {
         dist: path.join(process.cwd(), "dist"),
       },
       startingChatRooms: {} as Record<string, Record<string, any>>,
-      rootEndpointType: "api", // Ensure it's set to 'api' for an API-style root
+      rootEndpointType: "api",
     };
   },
 };
@@ -68,7 +68,7 @@ export const test = {
         otherRoom: {},
       },
       rpcTimeout: 3000,
-      rootEndpointType: "api", // Consistent with the default
+      rootEndpointType: "api",
     };
   },
 };
@@ -77,7 +77,7 @@ export const production = {
   [namespace]: () => {
     return {
       fileRequestLogLevel: "debug",
-      rootEndpointType: "api", // Ensure it's set to 'api' for production
+      rootEndpointType: "api",
     };
   },
 };

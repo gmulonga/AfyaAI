@@ -16,7 +16,8 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
 
       ],
       post: [
-        { path: "/register", action: "registerUser" }
+        { path: "/register", action: "registerUser" },
+        { path: "/login", action: "login" }
       ]
     };
   },
