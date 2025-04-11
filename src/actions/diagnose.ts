@@ -84,8 +84,13 @@ export class GeminiAI extends Action {
         return response;
       }
 
-      response.content = parsedContent;
-      return response;
+      response._toRender = false;
+      connection.rawConnection.responseHttpCode = 200;
+      connection.rawConnection.responseHeaders = {
+        "Content-Type": "application/json",
+      };
+      connection.rawConnection.res.end(JSON.stringify(parsedContent));
+      return;
 
     } catch (error) {
       console.error("Gemini AI Error:", error);
