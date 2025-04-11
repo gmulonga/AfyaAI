@@ -49,6 +49,8 @@ export class RegisterUser extends Action {
 
     await user.save();
 
+    data.response.message = 'User registered successfully';
+
     data.response = {
       success: true,
       message: 'User registered successfully',
