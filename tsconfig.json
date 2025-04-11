@@ -1,11 +1,48 @@
+// {
+//   "compilerOptions": {
+//     "outDir": "./dist",
+//     "allowJs": true,
+//     "module": "commonjs",
+//     "target": "es2018",
+//     "sourceMap": true,
+//     "noImplicitAny": true
+//   },
+//   "include": ["./src/**/*"]
+// }
+
+// {
+//   "compilerOptions": {
+//     "outDir": "./dist",
+//     "allowJs": true,
+//     "module": "commonjs",
+//     "target": "es2018",
+//     "sourceMap": true,
+//     "noImplicitAny": true,
+//     "esModuleInterop": true,
+//     "moduleResolution": "node",
+//     "resolveJsonModule": true
+//   },
+//   "include": ["./src/**/*"]
+// }
+
+
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "allowJs": true,
-    "module": "commonjs",
-    "target": "es2018",
-    "sourceMap": true,
-    "noImplicitAny": true
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "outDir": "dist",
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": false,
+    "strict": true,
+    "noImplicitAny": true,
+    "useUnknownInCatchVariables": false,
+    "inlineSourceMap": true
   },
-  "include": ["./src/**/*"]
+  "ts-node": {
+      "esm": true
+  },
+  "lib": ["esnext"]
 }

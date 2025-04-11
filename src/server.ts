@@ -1,20 +1,27 @@
-#!/usr/bin/env node
+import { Process } from 'actionhero';
 
-// load any custom code, configure the env, as needed
+const app = new Process();
+
+
+const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
+const mongoDB = process.env.MONGO_URI;
+
+main().catch((err) => console.log(err))
 
 async function main() {
-  // create a new actionhero process
-  const { Process } = await import("actionhero");
-  const app = new Process();
-
-  // handle unix signals and uncaught exceptions & rejections
-  app.registerProcessSignals((exitCode) => {
-    process.exit(exitCode);
-  });
-
-  // start the app!
-  // you can pass custom configuration to the process as needed
-  await app.start();
+  await mongoose.connect("mongodb+srv://gadsonmulonga:vd15lsRu9k0KQ95l@cluster0.fmpeqvo.mongodb.net/afyaAI?retryWrites=true&w=majority&appName=Cluster0")
 }
 
-main();
+
+async function start() {
+  try {
+    await app.start();
+    console.log('🚀 Server started successfully');
+  } catch (error) {
+    console.error('❌ Error starting server:', error);
+    process.exit(1);
+  }
+}
+
+start();
