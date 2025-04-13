@@ -45,7 +45,7 @@ export const DEFAULT = {
         ? process.env.ALLOWED_HOSTS.split(",")
         : [],
       // Port or Socket Path
-      port: process.env.PORT || 8080,
+      port: process.env.PORT || 8000,
       // Which IP to listen on (use '0.0.0.0' for the default ip stack; '::' for all on ipv4 and ipv6)
       // Set to `null` when listening to socket
       bindIP: "::",
