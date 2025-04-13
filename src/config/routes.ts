@@ -11,6 +11,7 @@ declare module "actionhero" {
 export const DEFAULT: { [namespace]: () => RoutesConfig } = {
   [namespace]: () => {
     return {
+      pathPrefix: '/api',
       get: [
         { path: "/swagger", action: "swagger" },
       ],
