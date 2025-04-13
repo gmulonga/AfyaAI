@@ -11,15 +11,14 @@ declare module "actionhero" {
 export const DEFAULT: { [namespace]: () => RoutesConfig } = {
   [namespace]: () => {
     return {
-      pathPrefix: '/api',
       get: [
         { path: "/swagger", action: "swagger" },
       ],
       post: [
         { path: "/register", action: "registerUser" },
         { path: "/login", action: "login" },
-        { path: "/diagnose", action: "geminiAI" }
-      ]
+        { path: "/diagnose", action: "geminiAI" },
+      ],
     };
   },
 };
