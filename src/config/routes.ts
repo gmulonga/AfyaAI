@@ -13,7 +13,6 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
     return {
       get: [
         { path: "/swagger", action: "swagger" },
-
       ],
       post: [
         { path: "/register", action: "registerUser" },

@@ -17,12 +17,12 @@ export class Login extends Action {
     };
   }
 
-  async run({connection, params }) {
+  async run({ connection, params }) {
     const { email, password } = params;
-    console.log('Received params:', params);
 
     const user = await userModel.findOne({ email });
     if (!user) {
+      connection.rawConnection.responseHttpCode = 401;
       throw new Error('Invalid email or password');
     }
 
