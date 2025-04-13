@@ -19,6 +19,7 @@ export class Login extends Action {
 
   async run({connection, params }) {
     const { email, password } = params;
+    console.log('Received params:', params);
 
     const user = await userModel.findOne({ email });
     if (!user) {

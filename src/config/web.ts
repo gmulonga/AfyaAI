@@ -14,6 +14,26 @@ declare module "actionhero" {
 export const DEFAULT = {
   [namespace]: (config: ActionheroConfigInterface) => {
     return {
+      servers: {
+        web: (config: API.Config["servers"]["web"]) => {
+          return {
+            enabled: true,
+            secure: false,
+            serverOptions: {},
+            port: 8080,
+    
+            allowedRequestHeaders: [
+              "Content-Type",
+              "Authorization",
+              "Accept",
+              "X-Requested-With",
+              "action",
+            ],
+            allowedResponseHeaders: ["Content-Type", "Authorization"],
+            accessControlAllowOrigin: "*", // or restrict to specific origin like "http://localhost:54461"
+          };
+        },
+      },
       enabled: true,
       // HTTP or HTTPS?  This setting is to enable SSL termination directly in the actionhero app, not set redirection host headers
       secure: false,
@@ -35,7 +55,7 @@ export const DEFAULT = {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods":
           "HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS, TRACE",
-        "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization, Accept, X-Requested-With, action",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
       },
       // Route that actions will be served from; secondary route against this route will be treated as actions,
