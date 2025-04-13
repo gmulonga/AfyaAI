@@ -8,12 +8,11 @@ export class MongooseInitializer extends Initializer {
   }
 
   async initialize() {
-    const mongoURI = process.env.MONGO_URI || "mongodb+srv://gadsonmulonga:vd15lsRu9k0KQ95l@cluster0.fmpeqvo.mongodb.net/afyaAI?retryWrites=true&w=majority&appName=Cluster0";
+    const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/mydatabase";
 
     try {
       await mongoose.connect(mongoURI);
       console.log("Connected to MongoDB", "info");
-      // api.log("Connected to MongoDB", "info");
     } catch (error) {
       api.log("Failed to connect to MongoDB: " + error.message, "error");
     }
@@ -22,6 +21,5 @@ export class MongooseInitializer extends Initializer {
   async stop() {
     await mongoose.disconnect();
     console.log("Disconnected from MongoDB", "info");
-    // api.log("Disconnected from MongoDB", "info");
   }
 }
