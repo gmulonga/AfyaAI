@@ -20,8 +20,7 @@ export const DEFAULT = {
             enabled: true,
             secure: false,
             serverOptions: {},
-            port: 8080,
-    
+            port: 8000,
             allowedRequestHeaders: [
               "Content-Type",
               "Authorization",
