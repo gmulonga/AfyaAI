@@ -6,6 +6,91 @@ import UserModel from "../models/userModel";
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
 
+/**
+ * @swagger
+ * tags:
+ *   name: AI
+ *   description: AI medical diagnosis
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     DiagnosisRequest:
+ *       type: object
+ *       required:
+ *         - prompt
+ *       properties:
+ *         prompt:
+ *           type: string
+ *           example: "I have a headache and fever for 2 days"
+ *     DiagnosisResponse:
+ *       type: object
+ *       properties:
+ *         shortAnswer:
+ *           type: string
+ *           example: "You may have a viral infection..."
+ *         possibleDiseases:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["Viral fever", "Flu", "Sinusitis"]
+ *         steps:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["Rest well", "Drink plenty of fluids", "Take paracetamol for fever"]
+ *         foodRemedies:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["Ginger tea", "Chicken soup", "Honey"]
+ *         visitClinic:
+ *           type: boolean
+ *           example: false
+ */
+
+/**
+ * @swagger
+ * /diagnose:
+ *   post:
+ *     summary: Get medical diagnosis using Gemini AI
+ *     tags: [AI]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/DiagnosisRequest'
+ *     responses:
+ *       200:
+ *         description: Successful diagnosis
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DiagnosisResponse'
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: AI service error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
 export class GeminiAI extends Action {
   constructor() {
     super();

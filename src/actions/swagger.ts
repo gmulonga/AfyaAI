@@ -144,8 +144,19 @@ export class Swagger extends Action {
       paths: swaggerPaths,
 
       securityDefinitions: {
-        // TODO (custom)?
+        BearerAuth: {
+          type: "apiKey",
+          name: "Authorization",
+          in: "header",
+          description: "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'",
+        },
       },
+      security: [
+        {
+          BearerAuth: [],
+        },
+      ],
+
       externalDocs: {
         description: "Learn more about Actionhero",
         url: "https://www.actionherojs.com",
