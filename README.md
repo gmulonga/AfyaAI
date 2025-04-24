@@ -21,3 +21,7 @@ npm install
 npx tsx src/server.ts
 ```
 
+## To run Swagger
+```bash
+http://localhost:3001/api-docs
+```
